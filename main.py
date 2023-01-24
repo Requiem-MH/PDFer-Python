@@ -96,7 +96,7 @@ import pytesseract
 from pdf2image import convert_from_path
 
 source = "/Users/michaelharrop/Projects/Work/test.pdf"
-destination = "/Users/michaelharrop/Projects/Work"
+destination = "/Users/michaelharrop/Projects/Work/test.txt"
 
 image_file_list = []
 
@@ -104,10 +104,8 @@ pdf_pages = convert_from_path(source, 900)
 
 print("Conversion Complete. Reading images...")
 
-
-with open ("/Users/michaelharrop/Projects/Work/transcript.txt", 'w') as text_file:
+with open(destination, 'w') as text_file:
     i = 1
-
     for image_file in pdf_pages:
         text = pytesseract.image_to_string(image_file)
 
