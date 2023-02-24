@@ -42,7 +42,7 @@ class Splitter:
 
     def split_on_text(self, regex_text):
         save_pdf = PyPDF2.PdfWriter()
-        save_pdf_name = None
+        save_name = None
 
         for i in range(0, self.pdf.getNumPages()):
             # Extract the text from each page
@@ -56,49 +56,21 @@ class Splitter:
 
             print(f"Working on Page {i + 1}")
 
-            # Search page for split text
-            split_text = re.search(f'{regex_text}', page_text)
+            # Search page with regex_text
+            search_result = re.search(f'{regex_text}', page_text)
+            print(search_result)
 
+            if save_name is not None:
+                if search_result is None or search_result != save_name:
+                    # Save existing output
+                    save_pdf.write(f'{self.save_pdf_path}/{save_name}_{self.generic_name}.pdf')
+                    save_pdf = PyPDF2.PdfWriter()
 
-            save_pdf_name = f'{split_text.group(1)}_{self.generic_name}' if split_text is not None else f'pg{i + 1}_{self.generic_name}'
+            save_pdf.addPage(self.pdf.getPage(i))
+            save_name = search_result.group(1) if search_result is not None and search_result.group(1).strip() != "" else f'pg{i + 1}'
 
-            #Search for text in page
-            #If text is found, start new document
-            #Otherwise add new page
-            #Save page
-
-    # if save_pdf is None:
-    #     #First page
-    #     save_pdf = PyPDF2.PdfWriter()
-    #     save_pdf.addPage(opened_pdf.getPage(i))
-    #     try:
-    #         save_pdf_name = re.search(r'STATE ID: (\d\d\d\d\d\d\d)', page_text).group(1)
-    #         save_pdf_grade = re.search(r'GRADE: (\d*)', page_text).group(1)
-    #     except TypeError:
-    #         save_pdf_name = 'Page {}'.format(i)
-    #         save_pdf_grade = i
-    # else:
-    #     if save_pdf_name == re.search(r'STATE ID: (\d\d\d\d\d\d\d)', page_text).group(1):
-    #         save_pdf.addPage(opened_pdf.getPage(i))
-    #
-    #     else:
-    #         output = open(destination + save_pdf_name + pdf_generic_name + save_pdf_grade, 'wb')
-    #         save_pdf.write(output)
-    #         output.close()
-    #
-    #         save_pdf = PyPDF2.PdfWriter()
-    #         save_pdf.addPage(opened_pdf.getPage(i))
-    #         try:
-    #             save_pdf_name = re.search(r'STATE ID: (\d\d\d\d\d\d\d)', page_text).group(1)
-    #             save_pdf_grade = re.search(r'GRADE: (\d*)', page_text).group(1)
-    #         except TypeError:
-    #             save_pdf_name = 'Page {}'.format(i)
-    #             save_pdf_grade = i
-    #
-    # if save_pdf is not None:
-    #     output = open(destination + save_pdf_name + pdf_generic_name + save_pdf_grade, 'wb')
-    #     save_pdf.write(output)
-    #     output.close()
+        # Save existing output for last page
+        save_pdf.write(f'{self.save_pdf_path}/{save_name}_{self.generic_name}.pdf')
 
     def split_ocr(self):
         pass
