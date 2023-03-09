@@ -9,13 +9,12 @@ def main():
         'name': r'Student Name:\s*(([\ A-Za-z][A-Za-z\'\-]+\,?)*)'
     }
 
-    source = '/Users/michaelharrop/Downloads/2015/Batch 1.pdf'
-    destination = '/Users/michaelharrop/Projects/Work/Split/'
-    gen_name = '_Transcript.pdf'
+    source = '/Users/michaelharrop/Downloads/2014/Batch 1.pdf'
+    destination = '/Users/michaelharrop/Projects/Work/Ready-Transcripts/'
+    gen_name = 'Transcript'
 
-    split_pdf = Splitter(source, destination, 'Test')
-    split_pdf.split(npages=4)
-    # split_pdf.split_on_text(expressions['name'])
+    split_pdf = Splitter(source, destination, gen_name)
+    split_pdf.split()
 
 
 if __name__ == '__main__':
