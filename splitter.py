@@ -33,7 +33,7 @@ class Splitter:
                     save_pdf.write(f'{self.save_pdf_path}/{save_pdf_name}.pdf')
 
                 save_pdf = PdfWriter()
-                save_pdf_name = f'pg{i + 1}_{self.generic_name}'
+                save_pdf_name = f'1-pg{i + 1}_{self.generic_name}'
 
             save_pdf.add_page(self.pdf.pages[i])
 

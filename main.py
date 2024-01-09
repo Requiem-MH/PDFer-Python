@@ -10,8 +10,8 @@ def main():
     }
 
     source = '/Users/michaelharrop/Downloads/2014/Batch 1.pdf'
-    destination = '/Users/michaelharrop/Projects/Work/Ready-Transcripts/'
-    gen_name = 'Transcript'
+    destination = '/Users/michaelharrop/Projects/Work/Split/'
+    gen_name = '2014_Sky View High School_Transcript'
 
     split_pdf = Splitter(source, destination, gen_name)
     split_pdf.split()
